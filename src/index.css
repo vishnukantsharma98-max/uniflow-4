@@ -1,0 +1,461 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *));
+
+@layer base {
+  :root,
+  [data-theme="light"],
+  html.light {
+    --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+    --font-signature: 'Caveat', cursive;
+
+    /* Global Neubrutalism Design Tokens - Light Mode */
+    --nb-bg: #FFFDF5;
+    --nb-surface: #FFFFFF;
+    --nb-cream: #FFF7DC;
+    --nb-primary: #FFD84D;
+    --nb-secondary: #B8F2E6;
+    --nb-accent: #FF8A65;
+    --nb-purple: #C9B6FF;
+    --nb-blue: #8EC5FF;
+    --nb-danger: #FF6B6B;
+    --nb-ink: #171717;
+    --nb-muted: #404040;
+    --nb-border: #171717;
+    --nb-shadow-color: #171717;
+
+    /* Legacy Theme Aliases Mapped to Neubrutalism */
+    --bg: #FFFDF5;
+    --bg-push: #FFD84D;
+    --surface: #FFFFFF;
+    --surface-elevated: #FFF7DC;
+    --surface-card: #FFFFFF;
+    --text-primary: #171717;
+    --text-secondary: #262626;
+    --text-muted: #404040;
+    --border: #171717;
+    --border-subtle: #171717;
+    --shadow: 4px 4px 0px #171717;
+    --shadow-lg: 6px 6px 0px #171717;
+    --nav-bg: #FFFDF5;
+    --nav-bg-scrolled: #FFFDF5;
+    --accent: #FFD84D;
+  }
+
+  .dark,
+  [data-theme="dark"],
+  html.dark {
+    /* Dark Neubrutalism Mode — Midnight Ink Palette */
+    --nb-bg: #0D1017;
+    --nb-surface: #161B26;
+    --nb-cream: #1E2534;
+    --nb-primary: #FFD84D;
+    --nb-secondary: #B8F2E6;
+    --nb-accent: #FF8A65;
+    --nb-purple: #C9B6FF;
+    --nb-blue: #8EC5FF;
+    --nb-danger: #FF6B6B;
+    --nb-ink: #F4F1E8;
+    --nb-muted: #9AA6BE;
+    --nb-border: #3D475E;
+    --nb-shadow-color: #283044;
+
+    --bg: #0D1017;
+    --bg-push: #161B26;
+    --surface: #161B26;
+    --surface-elevated: #1E2534;
+    --surface-card: #161B26;
+    --text-primary: #F4F1E8;
+    --text-secondary: #D5DBE8;
+    --text-muted: #9AA6BE;
+    --border: #3D475E;
+    --border-subtle: #2B3347;
+    --shadow: 4px 4px 0px #283044;
+    --shadow-lg: 6px 6px 0px #283044;
+    --nav-bg: #0D1017;
+    --nav-bg-scrolled: #0D1017;
+    --accent: #FFD84D;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--nb-bg);
+    color: var(--nb-ink);
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: var(--font-display);
+  }
+
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+
+  .font-signature {
+    font-family: var(--font-signature);
+  }
+
+  /* High-contrast Keyboard Focus Ring */
+  *:focus-visible {
+    outline: 3px solid #171717;
+    outline-offset: 2px;
+  }
+  .dark *:focus-visible {
+    outline: 3px solid #FFD84D;
+    outline-offset: 2px;
+  }
+}
+
+/* ==========================================================================
+   NEUBRUTALISM CORE PRIMITIVES (Layered so Tailwind utility classes take precedence)
+   ========================================================================== */
+
+@layer components {
+  .nb-card {
+    background-color: var(--nb-surface);
+    border: 2px solid var(--nb-border);
+    box-shadow: 4px 4px 0px var(--nb-shadow-color);
+    transition: transform 150ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 150ms cubic-bezier(0.22, 1, 0.36, 1), border-color 150ms ease, background-color 150ms ease;
+  }
+
+  .nb-card-lg {
+    background-color: var(--nb-surface);
+    border: 3px solid var(--nb-border);
+    box-shadow: 6px 6px 0px var(--nb-shadow-color);
+    transition: transform 150ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 150ms cubic-bezier(0.22, 1, 0.36, 1), border-color 150ms ease, background-color 150ms ease;
+  }
+
+  .nb-card-interactive {
+    background-color: var(--nb-surface);
+    border: 2px solid var(--nb-border);
+    box-shadow: 4px 4px 0px var(--nb-shadow-color);
+    transition: transform 140ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 140ms cubic-bezier(0.22, 1, 0.36, 1), border-color 140ms ease;
+  }
+
+  .nb-card-interactive:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px var(--nb-shadow-color);
+  }
+
+  .nb-card-interactive:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px var(--nb-shadow-color);
+  }
+
+  /* Dark Mode Card Refinements: vibrant yellow pop on dark cards, crisp ink frame on pastel cards */
+  .dark .nb-card-interactive:hover {
+    border-color: #FFD84D;
+    box-shadow: 6px 6px 0px #FFD84D;
+  }
+
+  .dark .nb-card-interactive:active {
+    border-color: #FFD84D;
+    box-shadow: 2px 2px 0px #FFD84D;
+  }
+
+  .dark .nb-card:is([class*="bg-[#FFD84D]"], [class*="bg-[#B8F2E6]"], [class*="bg-[#C9B6FF]"], [class*="bg-[#8EC5FF]"], [class*="bg-[#FF8A65]"]),
+  .dark .nb-card-lg:is([class*="bg-[#FFD84D]"], [class*="bg-[#B8F2E6]"], [class*="bg-[#C9B6FF]"], [class*="bg-[#8EC5FF]"], [class*="bg-[#FF8A65]"]) {
+    border-color: #171717;
+    box-shadow: 6px 6px 0px #38435E;
+  }
+
+  .dark .nb-card-interactive:is([class*="bg-[#FFD84D]"], [class*="bg-[#B8F2E6]"], [class*="bg-[#C9B6FF]"], [class*="bg-[#8EC5FF]"], [class*="bg-[#FF8A65]"]):hover {
+    border-color: #171717;
+    box-shadow: 7px 7px 0px #F4F1E8;
+  }
+
+  .dark .nb-card-interactive:is([class*="bg-[#FFD84D]"], [class*="bg-[#B8F2E6]"], [class*="bg-[#C9B6FF]"], [class*="bg-[#8EC5FF]"], [class*="bg-[#FF8A65]"]):active {
+    border-color: #171717;
+    box-shadow: 2px 2px 0px #F4F1E8;
+  }
+
+  /* Tactile Neubrutalist Buttons: hover shifts slightly down-right, click presses flat */
+  .nb-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    border: 2px solid #171717;
+    box-shadow: 4px 4px 0px #171717;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 120ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 120ms cubic-bezier(0.22, 1, 0.36, 1), background-color 120ms ease, border-color 120ms ease;
+  }
+
+  .nb-btn:hover:not(:disabled) {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px #171717;
+  }
+
+  .nb-btn:active:not(:disabled) {
+    transform: translate(4px, 4px);
+    box-shadow: 0px 0px 0px #171717;
+  }
+
+  .nb-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .dark .nb-btn {
+    border-color: #171717;
+    box-shadow: 4px 4px 0px #38435E;
+  }
+
+  .dark .nb-btn:hover:not(:disabled) {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px #38435E;
+  }
+
+  .dark .nb-btn:active:not(:disabled) {
+    transform: translate(4px, 4px);
+    box-shadow: 0px 0px 0px #38435E;
+  }
+
+  .nb-btn-sm {
+    border: 2px solid #171717;
+    box-shadow: 3px 3px 0px #171717;
+    transition: transform 120ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 120ms cubic-bezier(0.22, 1, 0.36, 1), border-color 120ms ease, background-color 120ms ease;
+  }
+
+  .nb-btn-sm:hover:not(:disabled) {
+    transform: translate(1.5px, 1.5px);
+    box-shadow: 1.5px 1.5px 0px #171717;
+  }
+
+  .nb-btn-sm:active:not(:disabled) {
+    transform: translate(3px, 3px);
+    box-shadow: 0px 0px 0px #171717;
+  }
+
+  /* Only apply dark slate border/shadow to dark-filled .nb-btn-sm controls; keep crisp ink borders on light/pastel small buttons */
+  .dark .nb-btn-sm:is([class*="dark:bg-"]) {
+    border-color: #46526E;
+    box-shadow: 3px 3px 0px #283044;
+  }
+
+  .dark .nb-btn-sm:is([class*="dark:bg-"]):hover:not(:disabled) {
+    border-color: #FFD84D;
+    box-shadow: 1.5px 1.5px 0px #FFD84D;
+  }
+
+  .dark .nb-btn-sm:is([class*="dark:bg-"]):active:not(:disabled) {
+    border-color: #FFD84D;
+    box-shadow: 0px 0px 0px #FFD84D;
+  }
+
+  .nb-btn-primary {
+    background-color: #FFD84D;
+    color: #171717;
+  }
+
+  .nb-btn-secondary {
+    background-color: #B8F2E6;
+    color: #171717;
+  }
+
+  .nb-btn-accent {
+    background-color: #FF8A65;
+    color: #171717;
+  }
+
+  .nb-btn-purple {
+    background-color: #C9B6FF;
+    color: #171717;
+  }
+
+  .nb-btn-blue {
+    background-color: #8EC5FF;
+    color: #171717;
+  }
+
+  .nb-btn-white {
+    background-color: #FFFFFF;
+    color: #171717;
+  }
+
+  .dark .nb-btn-white {
+    background-color: #1E2534;
+    color: #F4F1E8;
+    border-color: #46526E;
+    box-shadow: 4px 4px 0px #2A3348;
+  }
+
+  .dark .nb-btn-white:hover:not(:disabled) {
+    background-color: #252E40;
+    border-color: #FFD84D;
+    box-shadow: 2px 2px 0px #FFD84D;
+  }
+
+  .dark .nb-btn-white:active:not(:disabled) {
+    border-color: #FFD84D;
+    box-shadow: 0px 0px 0px #FFD84D;
+  }
+
+  .nb-btn-ink {
+    background-color: #171717;
+    color: #FFFDF5;
+  }
+
+  .dark .nb-btn-ink {
+    background-color: #FFD84D;
+    color: #171717;
+    border-color: #171717;
+    box-shadow: 4px 4px 0px #38435E;
+  }
+
+  .nb-btn-danger {
+    background-color: #FF6B6B;
+    color: #171717;
+  }
+
+  /* Neubrutalist Inputs & Form Controls */
+  .nb-input {
+    background-color: #FFFFFF;
+    color: #171717;
+    border: 2px solid #171717;
+    box-shadow: 3px 3px 0px #171717;
+    transition: transform 120ms ease, box-shadow 120ms ease, background-color 120ms ease, border-color 120ms ease;
+  }
+
+  .nb-input::placeholder {
+    color: #6B7280;
+  }
+
+  .nb-input:focus {
+    outline: none;
+    background-color: #FFFDF5;
+    box-shadow: 4px 4px 0px #171717;
+    transform: translate(-1px, -1px);
+  }
+
+  .dark .nb-input {
+    background-color: #161B26;
+    color: #F4F1E8;
+    border-color: #3D475E;
+    box-shadow: 4px 4px 0px #283044;
+  }
+
+  .dark .nb-input::placeholder {
+    color: #8693AD;
+  }
+
+  .dark .nb-input:hover {
+    border-color: #5A6785;
+  }
+
+  .dark .nb-input:focus {
+    background-color: #1C2332;
+    border-color: #FFD84D;
+    box-shadow: 4px 4px 0px #FFD84D;
+    transform: translate(-1px, -1px);
+  }
+
+  /* Neubrutalist Modals */
+  .nb-modal {
+    background-color: #FFFDF5;
+    color: #171717;
+    border: 3px solid #171717;
+    box-shadow: 8px 8px 0px #171717;
+  }
+
+  .dark .nb-modal {
+    background-color: #161B26;
+    color: #F4F1E8;
+    border-color: #4A5673;
+    box-shadow: 8px 8px 0px #2A344B;
+  }
+
+  /* Subtle Architectural Dot Pattern */
+  .nb-dot-grid {
+    background-image: radial-gradient(#171717 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .dark .nb-dot-grid {
+    background-image: radial-gradient(rgba(154, 166, 190, 0.16) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+}
+
+/* Scroll Reveal Animations */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1), transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.scroll-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Tabular Numbers for Stats & KPIs */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Crisp Geometric Subtle Float for Centerpiece Tags */
+@keyframes nbFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.animate-nb-float {
+  animation: nbFloat 4s ease-in-out infinite;
+}
+
+/* Reduced Motion Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 120ms !important;
+    scroll-behavior: auto !important;
+  }
+  .scroll-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Bold Neubrutalist Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--nb-bg);
+  border-left: 2px solid var(--nb-border);
+}
+::-webkit-scrollbar-thumb {
+  background: #FFD84D;
+  border: 2px solid #171717;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #FF8A65;
+}
+.dark ::-webkit-scrollbar-track {
+  background: #0D1017;
+  border-left: 2px solid #2B3347;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #FFD84D;
+  border: 2px solid #0D1017;
+}
